@@ -6,39 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Lista de Tarefas</title>
-
 </head>
 
 <body>
     <form id="formTarefa">
-        <h2>Adicionar Tarefa</h2>
-        <input type="text" id="inputTarefa" placeholder="Digite uma tarefa" required>
+        <h2>Lembrete de Tarefas!</h2>
+        <input type="text" id="inputTarefa" placeholder="Adicione uma tarefa" required>
         <button type="submit">Adicionar Tarefa</button>
     </form>
 
     <div id="tarefas">
-        <h2>Tarefas</h2>
+        <h2>Lista de Tarefas:</h2>
         <div id="containerTarefas">
-            <!-- Tarefas serão exibidas aqui -->
+            <!-- As tarefas serão exibidas aqui -->
         </div>
     </div>
 
     <script>
         // Array para armazenar as tarefas
         const tarefas = [
-            { id: 1, descricao: 'Comprar leite', concluida: false },
-            { id: 2, descricao: 'Estudar JavaScript', concluida: false },
-            { id: 3, descricao: 'Fazer exercícios físicos', concluida: false }
+
         ];
 
         // Função para carregar e exibir tarefas
         function carregarTarefas() {
-            console.log('Carregando tarefas...');
             const containerTarefas = document.getElementById('containerTarefas');
             containerTarefas.innerHTML = ''; // Limpa o conteúdo atual
 
             tarefas.forEach(tarefa => {
-                console.log('Criando tarefa:', tarefa);
                 const elementoTarefa = document.createElement('div');
                 elementoTarefa.className = `tarefa ${tarefa.concluida ? 'concluida' : ''}`;
                 elementoTarefa.innerHTML = `
@@ -46,11 +41,11 @@
                         <strong>Tarefa:</strong> ${tarefa.descricao}
                     </div>
                     <div class="acoes-tarefa">
-                        <button class="botao-editar" data-id="${tarefa.id}">Editar</button>
-                        <button class="botao-excluir" data-id="${tarefa.id}">Excluir</button>
+                        <button class="botao-editar" data-id="${tarefa.id}">Editar 📝</button>
+                        <button class="botao-excluir" data-id="${tarefa.id}">Excluir 🗑️</button>
                         ${tarefa.concluida
-                        ? `<button class="botao-reabrir" data-id="${tarefa.id}">Concluída</button>`
-                        : `<button class="botao-concluir" data-id="${tarefa.id}">Não Concluída</button>`
+                        ? `<button class="botao-reabrir botao-concluida" data-id="${tarefa.id}">Concluída ✅</button>`
+                        : `<button class="botao-pendente" data-id="${tarefa.id}"> Pendente ⚠️</button>`
                     }
                     </div>
                 `;
@@ -61,11 +56,9 @@
             document.querySelectorAll('.botao-excluir').forEach(botao => {
                 botao.addEventListener('click', function () {
                     const id = parseInt(this.getAttribute('data-id'));
-                    console.log('Excluir tarefa com ID:', id);
                     const index = tarefas.findIndex(t => t.id === id);
                     if (index > -1) {
                         tarefas.splice(index, 1); // Remove a tarefa do array
-                        console.log('Tarefa excluída:', id);
                         carregarTarefas(); // Atualiza a lista de tarefas
                     }
                 });
@@ -74,35 +67,34 @@
             document.querySelectorAll('.botao-editar').forEach(botao => {
                 botao.addEventListener('click', function () {
                     const id = parseInt(this.getAttribute('data-id'));
-                    console.log('Editar tarefa com ID:', id);
                     const tarefa = tarefas.find(t => t.id === id);
                     const novaDescricao = prompt('Editar tarefa:', tarefa.descricao);
                     if (novaDescricao && novaDescricao.trim() !== '') {
                         tarefa.descricao = novaDescricao.trim(); // Atualiza a descrição da tarefa
-                        console.log('Tarefa atualizada:', tarefa);
                         carregarTarefas(); // Atualiza a lista de tarefas
                     }
                 });
             });
 
-            document.querySelectorAll('.botao-concluir').forEach(botao => {
+            document.querySelectorAll('.botao-pendente').forEach(botao => {
                 botao.addEventListener('click', function () {
                     const id = parseInt(this.getAttribute('data-id'));
-                    console.log('Concluir tarefa com ID:', id);
                     const tarefa = tarefas.find(t => t.id === id);
-                    tarefa.concluida = true; // Marca a tarefa como concluída
-                    console.log('Tarefa concluída:', tarefa);
-                    carregarTarefas(); // Atualiza a lista de tarefas
+                    tarefa.concluida = true;
+
+                    // Altera o texto e a cor do botão
+                    this.textContent = 'Concluída';
+                    this.style.backgroundColor = 'green';
+
+                    carregarTarefas();
                 });
             });
 
             document.querySelectorAll('.botao-reabrir').forEach(botao => {
                 botao.addEventListener('click', function () {
                     const id = parseInt(this.getAttribute('data-id'));
-                    console.log('Reabrir tarefa com ID:', id);
                     const tarefa = tarefas.find(t => t.id === id);
                     tarefa.concluida = false; // Marca a tarefa como não concluída
-                    console.log('Tarefa não concluída:', tarefa);
                     carregarTarefas(); // Atualiza a lista de tarefas
                 });
             });
@@ -110,7 +102,6 @@
 
         // Carregar tarefas quando a página for carregada
         window.onload = function () {
-            console.log('Página carregada');
             carregarTarefas();
         };
 
@@ -125,7 +116,6 @@
                     concluida: false // Nova tarefa começa como não concluída
                 };
                 tarefas.push(novaTarefa); // Adiciona a nova tarefa ao array
-                console.log('Nova tarefa adicionada:', novaTarefa);
                 carregarTarefas(); // Atualiza a lista de tarefas
                 this.reset(); // Limpa o formulário
             }
