@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: white;
     margin: 0;
     padding: 20px;
 }
@@ -11,24 +11,25 @@ body {
 
 #containerTarefas {
     background: white;
-    border: 1px solid #ddd;
+    border: 1px solid black;
     padding: 10px;
     border-radius: 5px;
 }
 
 .tarefa {
-    border: 1px solid #ccc;
+    border: 1px solid black;
     margin: 10px 0;
     padding: 10px;
     border-radius: 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: whitesmoke;
+    background-color: yellow;
 }
 
 .tarefa.concluida {
-    background-color: red;
+    background-color: rgb(108, 202, 31);
+    /* Cor de fundo verde claro para tarefas concluídas */
     text-decoration: line-through;
 }
 
@@ -47,9 +48,7 @@ body {
 
 .botao-editar,
 .botao-excluir,
-.botao-concluir,
 .botao-reabrir {
-    background-color: #007bff;
     color: #fff;
     border: none;
     padding: 5px 10px;
@@ -58,14 +57,41 @@ body {
     margin: 0 5px;
 }
 
-.botao-concluir {
-    background-color: green;
+.botao-editar {
+    background-color: #007bff;
+    /* Cor de fundo azul */
+}
+
+.botao-excluir {
+    background-color: red;
+    /* Cor de fundo vermelha */
+}
+
+.botao-pendente {
+    background-color: yellow;
+    /* Cor de fundo amarelo */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 0 5px;
 }
 
 .botao-reabrir {
-    background-color: red;
+    background-color: #007bff;
+    /* Cor de fundo azul */
 }
 
+/* Estilos para botões de tarefas concluídas */
+.tarefa.concluida .botao-concluir,
+/* Estilo para o botão "Concluída" quando a tarefa está concluída */
+.tarefa.concluida .botao-reabrir {
+    /* Estilo para o botão "Reabrir" quando a tarefa está concluída */
+    background-color: green;
+    /* Cor de fundo verde */
+}
+
+/* Hover effects */
 .botao-editar:hover,
 .botao-excluir:hover,
 .botao-concluir:hover,
